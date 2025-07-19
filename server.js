@@ -11,7 +11,8 @@ import userRouter from './routes/user.js';
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import attendanceRouter from './routes/attendance.js';
 import studentRouter from './routes/student.js';
-import pollBiometricDevice from './zkFetcher.js'; // ✅ import polling function
+
+import biometricRouter from './routes/biometric.js';
 
 
 
@@ -29,33 +30,14 @@ app.use("/api/users", userRouter);
 
 app.use('/api/attendance', attendanceRouter);
 app.use('/api/students', studentRouter);
+app.use('/api/biometric', biometricRouter);
+
 app.get('/', (req, res) => {
   res.send('✅ Biometric Attendance API is running.');
 });
-
-// ✅ Start the server and begin polling
-// app.listen(process.env.PORT, () => {
-//   connectToMongoDB();
-//   console.log(`🚀 Server Running on port ${process.env.PORT}`);
-
-//   // Start zkFetcher polling (with mock logs for now)
-//   import('./zkFetcher.js'); // First immediate call
-
-//   setInterval(() => {
-//     import('./zkFetcher.js');
-//   }, 30000); // Every 30 seconds
-// });
 
 // ✅ Start server and polling
 app.listen(process.env.PORT, () => {
   connectToMongoDB();
   console.log(`🚀 Server Running on port ${process.env.PORT}`);
-
-  // Immediately call the function
-  pollBiometricDevice();
-
-  // Then repeat every 30 seconds
-  setInterval(() => {
-    pollBiometricDevice();
-  }, 30 * 1000); // 30 seconds
 });

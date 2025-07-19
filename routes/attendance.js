@@ -1,7 +1,7 @@
 import express from 'express';
 import { getAllAttendance, logAttendance } from '../controllers/attendanceController.js';
 import authMiddleware from '../middleware/authMiddleware.js';
-import pollerAuth from '../middleware/pollerAuth.js';
+// import pollerAuth from '../middleware/pollerAuth.js';
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ const router = express.Router();
 router.get('/', authMiddleware, getAllAttendance);
 
 // 📤 POST is now accessible to polling script using poller secret
-router.post('/', pollerAuth, logAttendance);
+// router.post('/', pollerAuth, logAttendance);
 
 export default router;
